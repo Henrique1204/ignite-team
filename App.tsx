@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
-import Groups from './src/screens/Groups';
+import Groups from '@screens/Groups';
 
 const Styles = StyleSheet.create({
 	container: {
