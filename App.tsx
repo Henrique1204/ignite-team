@@ -5,6 +5,8 @@ import Groups from '@screens/Groups';
 
 const Styles = StyleSheet.create({
 	container: {
+		backgroundColor: '#000',
+
 		flex: 1,
 	},
 });

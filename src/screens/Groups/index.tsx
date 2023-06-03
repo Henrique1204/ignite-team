@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {} from 'react-native';
+
+import * as Styles from './styles';
 
 const Groups: React.FC = () => {
 	return (
-		<View>
-			<Text>Groups</Text>
-		</View>
+		<Styles.Container>
+			<Styles.Title>Groups</Styles.Title>
+		</Styles.Container>
 	);
 };
 
