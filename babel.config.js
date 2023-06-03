@@ -13,7 +13,6 @@ module.exports = function (api) {
 						'@utils': './src/core/utils',
 						'@storage': './src/core/storage',
 						'@images': './src/core/assets/images',
-						'@theme': './src/core/assets/theme',
 						'@routes': './src/routes',
 						'@screens': './src/screens',
 						'@components': './src/components',

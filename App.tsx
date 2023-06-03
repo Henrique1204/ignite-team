@@ -1,27 +1,30 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { StatusBar } from 'react-native';
+import { default as styled, ThemeProvider } from 'styled-components/native';
+
+import { theme } from '@core/assets/theme';
 
 import Groups from '@screens/Groups';
 
-const Styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#000',
+const SafeAreaView = styled.SafeAreaView`
+	background-color: ${({ theme }) => theme.colors.gray_700};
 
-		flex: 1,
-	},
-});
+	flex: 1;
+`;
 
 const App: React.FC = () => {
 	return (
-		<SafeAreaView style={Styles.container}>
-			<StatusBar
-				barStyle='light-content'
-				backgroundColor='transparent'
-				translucent
-			/>
+		<ThemeProvider theme={theme}>
+			<SafeAreaView>
+				<StatusBar
+					barStyle='light-content'
+					backgroundColor='transparent'
+					translucent
+				/>
 
-			<Groups />
-		</SafeAreaView>
+				<Groups />
+			</SafeAreaView>
+		</ThemeProvider>
 	);
 };
 
