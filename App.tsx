@@ -12,7 +12,7 @@ import { theme } from '@core/assets/theme';
 
 import Groups from '@screens/Groups';
 
-import Loader from '@components/Loader';
+import { Loader, Header } from '@components/index';
 
 const SafeAreaView = styled.SafeAreaView`
 	background-color: ${({ theme }) => theme.colors.gray_600};
@@ -40,6 +40,8 @@ const App: React.FC = () => {
 					accessibilityLabel='Animação de carregamento do projeto.'
 					aria-hidden={fontsLoaded}
 				>
+					<Header />
+
 					<Groups />
 				</Loader>
 			</SafeAreaView>
