@@ -1,10 +1,18 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { default as styled, ThemeProvider } from 'styled-components/native';
+import styled, { ThemeProvider } from 'styled-components/native';
+
+import {
+	useFonts,
+	Roboto_400Regular,
+	Roboto_700Bold,
+} from '@expo-google-fonts/roboto';
 
 import { theme } from '@core/assets/theme';
 
 import Groups from '@screens/Groups';
+
+import Loader from '@components/Loader';
 
 const SafeAreaView = styled.SafeAreaView`
 	background-color: ${({ theme }) => theme.colors.gray_700};
@@ -13,6 +21,11 @@ const SafeAreaView = styled.SafeAreaView`
 `;
 
 const App: React.FC = () => {
+	const [fontsLoaded] = useFonts({
+		Roboto_400Regular,
+		Roboto_700Bold,
+	});
+
 	return (
 		<ThemeProvider theme={theme}>
 			<SafeAreaView>
@@ -22,7 +35,9 @@ const App: React.FC = () => {
 					translucent
 				/>
 
-				<Groups />
+				<Loader loading={!fontsLoaded}>
+					<Groups />
+				</Loader>
 			</SafeAreaView>
 		</ThemeProvider>
 	);
