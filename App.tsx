@@ -15,7 +15,7 @@ import Groups from '@screens/Groups';
 import Loader from '@components/Loader';
 
 const SafeAreaView = styled.SafeAreaView`
-	background-color: ${({ theme }) => theme.colors.gray_700};
+	background-color: ${({ theme }) => theme.colors.gray_600};
 
 	flex: 1;
 `;
@@ -35,7 +35,11 @@ const App: React.FC = () => {
 					translucent
 				/>
 
-				<Loader loading={!fontsLoaded}>
+				<Loader
+					loading={!fontsLoaded}
+					accessibilityLabel='Animação de carregamento do projeto.'
+					aria-hidden={fontsLoaded}
+				>
 					<Groups />
 				</Loader>
 			</SafeAreaView>

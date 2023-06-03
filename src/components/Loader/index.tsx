@@ -6,11 +6,15 @@ interface ILoaderProps {
 	loading: boolean;
 }
 
-const Loader: IComponent<ILoaderProps> = ({ children, loading }) => {
+const Loader: IComponentWithChildren<ILoaderProps> = ({
+	children,
+	loading,
+	...props
+}) => {
 	if (!loading) return <>{children}</>;
 
 	return (
-		<Styles.Container>
+		<Styles.Container {...props}>
 			<Styles.Loading />
 		</Styles.Container>
 	);
