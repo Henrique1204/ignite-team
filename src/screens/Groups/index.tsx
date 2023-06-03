@@ -1,12 +1,13 @@
 import React from 'react';
-import {} from 'react-native';
+
+import Highlight from '@components/Highlight';
 
 import * as Styles from './styles';
 
 const Groups: React.FC = () => {
 	return (
 		<Styles.Container>
-			<Styles.Title>Groups</Styles.Title>
+			<Highlight title='Turmas' subtitle='Jogue com a sua turma' />
 		</Styles.Container>
 	);
 };
