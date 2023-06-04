@@ -4,9 +4,7 @@ import * as Styles from './styles';
 
 import LogoFile from '@images/logo.png';
 
-interface IHeaderProps {
-	showBackArrow?: boolean;
-}
+interface IHeaderProps extends Styles.IContainerProps {}
 
 const Header: IComponent<IHeaderProps> = ({ showBackArrow, ...props }) => {
 	return (

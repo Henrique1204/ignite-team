@@ -2,7 +2,7 @@ import { AccessibilityProps } from 'react-native';
 
 declare global {
 	export interface IDefaultProps extends Partial<AccessibilityProps> {
-		testId?: string;
+		testID?: string;
 	}
 
 	export interface IDefaultPropsWithChildren extends IDefaultProps {
