@@ -1,11 +1,11 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 import { TouchableOpacity } from 'react-native';
 
-export type buttonStylePropEnum = 'primary' | 'secondary';
+import { IColorsEnum } from '@types_/core/assets/theme';
 
-export interface IContainerProps {
-	type?: buttonStylePropEnum;
+interface IContainerProps {
+	background: IColorsEnum;
 }
 
 export const Container = styled(TouchableOpacity)<IContainerProps>`
@@ -14,15 +14,18 @@ export const Container = styled(TouchableOpacity)<IContainerProps>`
 	max-height: 56px;
 	border-radius: 6px;
 
-	background-color: ${({ theme, type }) =>
-		type === 'primary' ? theme.colors.green_700 : theme.colors.red_dark};
-
 	align-items: center;
 	justify-content: center;
+
+	${({ theme, background }) => css`
+		background-color: ${theme.colors[background]};
+	`}
 `;
 
 export const Title = styled.Text`
-	font-size: ${({ theme }) => theme.fontSize.md};
-	font-family: ${({ theme }) => theme.fontFamily.bold};
-	color: ${({ theme }) => theme.colors.white};
+	${({ theme }) => css`
+		font-size: ${theme.fontSize.md};
+		font-family: ${theme.fontFamily.bold};
+		color: ${theme.colors.white};
+	`}
 `;

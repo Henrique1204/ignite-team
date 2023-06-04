@@ -1,9 +1,9 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 import { TextInput } from 'react-native';
 
 export const Container = styled(TextInput).attrs(({ theme }) => ({
-	placeholderTextColor: theme.colors.gray_400 as string,
+	placeholderTextColor: theme.colors.gray_400,
 }))`
 	width: 100%;
 	min-height: 56px;
@@ -11,9 +11,11 @@ export const Container = styled(TextInput).attrs(({ theme }) => ({
 	padding: 16px;
 	border-radius: 6px;
 
-	font-size: ${({ theme }) => theme.fontSize.md};
-	font-family: ${({ theme }) => theme.fontFamily.regular};
+	${({ theme }) => css`
+		font-size: ${theme.fontSize.md};
+		font-family: ${theme.fontFamily.regular};
 
-	color: ${({ theme }) => theme.colors.white};
-	background-color: ${({ theme }) => theme.colors.gray_700};
+		color: ${theme.colors.white};
+		background-color: ${theme.colors.gray_700};
+	`}
 `;

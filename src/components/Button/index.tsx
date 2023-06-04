@@ -3,8 +3,11 @@ import { TouchableOpacityProps } from 'react-native';
 
 import * as Styles from './styles';
 
-interface IButtonProps extends TouchableOpacityProps, Styles.IContainerProps {
+type buttonStylePropEnum = 'primary' | 'secondary';
+
+interface IButtonProps extends TouchableOpacityProps {
 	title?: string;
+	type?: buttonStylePropEnum;
 }
 
 const Button: IComponentWithChildren<IButtonProps> = ({
@@ -21,7 +24,7 @@ const Button: IComponentWithChildren<IButtonProps> = ({
 			accessibilityState={{
 				disabled: props?.disabled,
 			}}
-			type={type}
+			background={type === 'primary' ? 'green_700' : 'red_dark'}
 			{...props}
 		>
 			{title ? <Styles.Title>{title}</Styles.Title> : children}

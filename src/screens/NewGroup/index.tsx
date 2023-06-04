@@ -14,7 +14,7 @@ const NewGroup: React.FC = () => {
 				subtitle='crie a turma para adicionar as pessoas.'
 			/>
 
-			<TextInput />
+			<TextInput placeholder='Nome da turma' />
 
 			<Button title='Criar' style={{ marginTop: 20 }} />
 		</Styles.Container>
