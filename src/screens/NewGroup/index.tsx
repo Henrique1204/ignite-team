@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Highlight } from '@components/index';
+import { Button, Highlight, TextInput } from '@components/index';
 
 import * as Styles from './styles';
 
@@ -14,7 +14,9 @@ const NewGroup: React.FC = () => {
 				subtitle='crie a turma para adicionar as pessoas.'
 			/>
 
-			<Button title='Criar' />
+			<TextInput />
+
+			<Button title='Criar' style={{ marginTop: 20 }} />
 		</Styles.Container>
 	);
 };
