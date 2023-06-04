@@ -10,7 +10,7 @@ import {
 
 import { theme } from '@core/assets/theme';
 
-import NewGroup from '@screens/NewGroup';
+import Players from '@screens/Players';
 
 import { Loader, Header } from '@components/index';
 
@@ -42,7 +42,7 @@ const App: React.FC = () => {
 				>
 					<Header showBackArrow />
 
-					<NewGroup />
+					<Players />
 				</Loader>
 			</SafeAreaView>
 		</ThemeProvider>
