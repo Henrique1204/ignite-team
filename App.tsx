@@ -10,7 +10,7 @@ import {
 
 import { theme } from '@core/assets/theme';
 
-import Groups from '@screens/Groups';
+import NewGroup from '@screens/NewGroup';
 
 import { Loader, Header } from '@components/index';
 
@@ -40,9 +40,9 @@ const App: React.FC = () => {
 					accessibilityLabel='Animação de carregamento do projeto.'
 					aria-hidden={fontsLoaded}
 				>
-					<Header />
+					<Header showBackArrow />
 
-					<Groups />
+					<NewGroup />
 				</Loader>
 			</SafeAreaView>
 		</ThemeProvider>

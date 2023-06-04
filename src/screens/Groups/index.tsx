@@ -1,5 +1,5 @@
-import { FlatList } from 'react-native';
 import React from 'react';
+import { FlatList } from 'react-native';
 
 import { Highlight, GroupCard, ListEmpty } from '@components/index';
 

@@ -9,6 +9,7 @@ export interface IContainerProps {
 }
 
 export const Container = styled(TouchableOpacity)<IContainerProps>`
+	width: 100%;
 	min-height: 56px;
 	max-height: 56px;
 	border-radius: 6px;
@@ -16,7 +17,6 @@ export const Container = styled(TouchableOpacity)<IContainerProps>`
 	background-color: ${({ theme, type }) =>
 		type === 'primary' ? theme.colors.green_700 : theme.colors.red_dark};
 
-	flex: 1;
 	align-items: center;
 	justify-content: center;
 `;

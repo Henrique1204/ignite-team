@@ -7,7 +7,7 @@ export interface IContainerProps {
 
 export const Container = styled.View<IContainerProps>`
 	width: 100%;
-	padding: 8px;
+	padding: 12px 24px;
 
 	flex-direction: row;
 	align-items: center;
