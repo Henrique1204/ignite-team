@@ -5,11 +5,12 @@ import { TextInput } from 'react-native';
 export const Container = styled(TextInput).attrs(({ theme }) => ({
 	placeholderTextColor: theme.colors.gray_400,
 }))`
-	width: 100%;
 	min-height: 56px;
 	max-height: 56px;
 	padding: 16px;
 	border-radius: 6px;
+
+	flex: 1;
 
 	${({ theme }) => css`
 		font-size: ${theme.fontSize.md};

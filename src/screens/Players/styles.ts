@@ -11,9 +11,14 @@ export const Container = styled.View`
 	justify-content: flex-start;
 `;
 
-export const Icon = styled(UsersThree).attrs(({ theme }) => ({
-	color: theme.colors.green_700,
-	size: 56,
-}))`
-	align-self: center;
+export const Form = styled.View`
+	width: 100%;
+	border-radius: 6px;
+
+	background: ${({ theme }) => theme.colors.gray_700};
+
+	flex-direction: row;
+	justify-content: center;
+
+	gap: 12px;
 `;
