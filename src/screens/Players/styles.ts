@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
 
-import { UsersThree } from 'phosphor-react-native';
-
 export const Container = styled.View`
 	padding: 24px;
 	margin-top: 16px;
@@ -19,6 +17,5 @@ export const Form = styled.View`
 
 	flex-direction: row;
 	justify-content: center;
-
 	gap: 12px;
 `;

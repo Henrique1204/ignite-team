@@ -1,8 +1,8 @@
 import React from 'react';
 
-import * as Styles from './styles';
-
 import LogoFile from '@images/logo.png';
+
+import * as Styles from './styles';
 
 interface IHeaderProps extends Styles.IContainerProps {}
 

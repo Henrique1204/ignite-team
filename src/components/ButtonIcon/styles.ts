@@ -4,8 +4,6 @@ import { TouchableOpacity } from 'react-native';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { IColorsEnum } from '@types_/core/assets/theme';
-
 export const Container = styled(TouchableOpacity)`
 	width: 56px;
 	height: 56px;

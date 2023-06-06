@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ButtonIcon, Highlight, TextInput } from '@components/index';
+import { ButtonIcon, Filter, Highlight, TextInput } from '@components/index';
 
 import * as Styles from './styles';
 
@@ -17,6 +17,8 @@ const Players: React.FC = () => {
 
 				<ButtonIcon icon='add' />
 			</Styles.Form>
+
+			<Filter title='Team 1' isActive />
 		</Styles.Container>
 	);
 };
