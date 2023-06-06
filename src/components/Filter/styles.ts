@@ -7,10 +7,10 @@ export interface IContainerProps {
 }
 
 export const Container = styled(TouchableOpacity)<IContainerProps>`
-	width: 70px;
+	min-width: 70px;
 	height: 38px;
 	border-radius: 4px;
-	margin-left: 12px;
+	margin-right: 12px;
 
 	align-items: center;
 	justify-content: center;
