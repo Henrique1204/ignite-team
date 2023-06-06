@@ -14,6 +14,7 @@ const Groups: React.FC = () => {
 
 			<FlatList
 				data={groups}
+				showsVerticalScrollIndicator={false}
 				contentContainerStyle={!groups.length && { flex: 1 }}
 				keyExtractor={(key) => key}
 				renderItem={({ item }) => <GroupCard title={item} />}

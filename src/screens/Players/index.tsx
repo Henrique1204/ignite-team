@@ -3,9 +3,11 @@ import React from 'react';
 import { FlatList } from 'react-native';
 
 import {
+	Button,
 	ButtonIcon,
 	Filter,
 	Highlight,
+	ListEmpty,
 	PlayerCard,
 	TextInput,
 } from '@components/index';
@@ -57,11 +59,21 @@ const Players: React.FC = () => {
 
 			<FlatList
 				data={players}
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={[
+					{ paddingBottom: 100 },
+					players.length === 0 && { flex: 1 },
+				]}
 				keyExtractor={(item) => item}
 				renderItem={({ item }) => (
 					<PlayerCard name={item} onRemove={handleOnRemove} />
 				)}
+				ListEmptyComponent={() => (
+					<ListEmpty message='Não há pessoas nesse time.' />
+				)}
 			/>
+
+			<Button title='Remover Turma' type='secondary' />
 		</Styles.Container>
 	);
 };
