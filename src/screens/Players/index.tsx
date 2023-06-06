@@ -2,13 +2,28 @@ import React from 'react';
 
 import { FlatList } from 'react-native';
 
-import { ButtonIcon, Filter, Highlight, TextInput } from '@components/index';
+import {
+	ButtonIcon,
+	Filter,
+	Highlight,
+	PlayerCard,
+	TextInput,
+} from '@components/index';
 
 import * as Styles from './styles';
 
 const Players: React.FC = () => {
 	const [team, setTeam] = React.useState<string>('Time a');
-	const [players, setPlayers] = React.useState<string[]>([]);
+	const [players, setPlayers] = React.useState<string[]>([
+		'Paulo',
+		'Henrique',
+		'Silva',
+		'Souza',
+	]);
+
+	const handleOnRemove = (player: string) => {
+		setPlayers((prev) => prev.filter((item) => item !== player));
+	};
 
 	return (
 		<Styles.Container>
@@ -39,6 +54,14 @@ const Players: React.FC = () => {
 
 				<Styles.NumberOfPlayers>{players.length}</Styles.NumberOfPlayers>
 			</Styles.HeaderList>
+
+			<FlatList
+				data={players}
+				keyExtractor={(item) => item}
+				renderItem={({ item }) => (
+					<PlayerCard name={item} onRemove={handleOnRemove} />
+				)}
+			/>
 		</Styles.Container>
 	);
 };

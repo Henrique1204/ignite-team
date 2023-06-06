@@ -6,4 +6,5 @@ export { default as Header } from './Header';
 export { default as Highlight } from './Highlight';
 export { default as ListEmpty } from './ListEmpty';
 export { default as Loader } from './Loader';
+export { default as PlayerCard } from './PlayerCard';
 export { default as TextInput } from './TextInput';
