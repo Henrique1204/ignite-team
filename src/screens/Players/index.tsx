@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { FlatList } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 import {
 	Button,
@@ -23,6 +23,9 @@ const Players: React.FC = () => {
 		'Souza',
 	]);
 
+	const route = useRoute();
+	const { group } = route.params as IPlayersRouteParams;
+
 	const handleOnRemove = (player: string) => {
 		setPlayers((prev) => prev.filter((item) => item !== player));
 	};
@@ -30,7 +33,7 @@ const Players: React.FC = () => {
 	return (
 		<Styles.Container>
 			<Highlight
-				title='Nome da turma'
+				title={group}
 				subtitle='adicione a galera e separe os times.'
 			/>
 
