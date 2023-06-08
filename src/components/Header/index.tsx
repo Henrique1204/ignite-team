@@ -1,12 +1,18 @@
 import React from 'react';
 
+import { useRoute } from '@react-navigation/native';
+
 import LogoFile from '@images/logo.png';
 
 import * as Styles from './styles';
 
-interface IHeaderProps extends Styles.IContainerProps {}
+interface IHeaderProps {}
 
-const Header: IComponent<IHeaderProps> = ({ showBackArrow, ...props }) => {
+const Header: IComponent<IHeaderProps> = ({ ...props }) => {
+	const { name } = useRoute();
+
+	const showBackArrow = name !== 'groups';
+
 	return (
 		<Styles.Container showBackArrow={showBackArrow} {...props}>
 			{showBackArrow && (

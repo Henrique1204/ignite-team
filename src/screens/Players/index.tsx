@@ -8,6 +8,7 @@ import {
 	Filter,
 	Highlight,
 	ListEmpty,
+	MainContainer,
 	PlayerCard,
 	TextInput,
 } from '@components/index';
@@ -28,53 +29,55 @@ const Players: React.FC = () => {
 	};
 
 	return (
-		<Styles.Container>
-			<Highlight
-				title='Nome da turma'
-				subtitle='adicione a galera e separe os times.'
-			/>
+		<MainContainer>
+			<Styles.Container>
+				<Highlight
+					title='Nome da turma'
+					subtitle='adicione a galera e separe os times.'
+				/>
 
-			<Styles.Form>
-				<TextInput placeholder='Nome da pessoa' autoCorrect={false} />
+				<Styles.Form>
+					<TextInput placeholder='Nome da pessoa' autoCorrect={false} />
 
-				<ButtonIcon icon='add' />
-			</Styles.Form>
+					<ButtonIcon icon='add' />
+				</Styles.Form>
 
-			<Styles.HeaderList>
+				<Styles.HeaderList>
+					<FlatList
+						horizontal
+						data={['Time a', 'Time b']}
+						keyExtractor={(item) => item}
+						renderItem={({ item }) => (
+							<Filter
+								title={item}
+								isActive={item === team}
+								onPress={() => setTeam(item)}
+							/>
+						)}
+					/>
+
+					<Styles.NumberOfPlayers>{players.length}</Styles.NumberOfPlayers>
+				</Styles.HeaderList>
+
 				<FlatList
-					horizontal
-					data={['Time a', 'Time b']}
+					data={players}
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={[
+						{ paddingBottom: 100 },
+						players.length === 0 && { flex: 1 },
+					]}
 					keyExtractor={(item) => item}
 					renderItem={({ item }) => (
-						<Filter
-							title={item}
-							isActive={item === team}
-							onPress={() => setTeam(item)}
-						/>
+						<PlayerCard name={item} onRemove={handleOnRemove} />
+					)}
+					ListEmptyComponent={() => (
+						<ListEmpty message='Não há pessoas nesse time.' />
 					)}
 				/>
 
-				<Styles.NumberOfPlayers>{players.length}</Styles.NumberOfPlayers>
-			</Styles.HeaderList>
-
-			<FlatList
-				data={players}
-				showsVerticalScrollIndicator={false}
-				contentContainerStyle={[
-					{ paddingBottom: 100 },
-					players.length === 0 && { flex: 1 },
-				]}
-				keyExtractor={(item) => item}
-				renderItem={({ item }) => (
-					<PlayerCard name={item} onRemove={handleOnRemove} />
-				)}
-				ListEmptyComponent={() => (
-					<ListEmpty message='Não há pessoas nesse time.' />
-				)}
-			/>
-
-			<Button title='Remover Turma' type='secondary' />
-		</Styles.Container>
+				<Button title='Remover Turma' type='secondary' />
+			</Styles.Container>
+		</MainContainer>
 	);
 };
 

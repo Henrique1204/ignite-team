@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import styled, { ThemeProvider } from 'styled-components/native';
+import { ThemeProvider } from 'styled-components/native';
 
 import {
 	useFonts,
@@ -10,15 +10,9 @@ import {
 
 import { theme } from '@core/assets/theme';
 
-import Players from '@screens/Players';
+import Routes from './src/routes';
 
-import { Loader, Header } from '@components/index';
-
-const SafeAreaView = styled.SafeAreaView`
-	background-color: ${({ theme }) => theme.colors.gray_600};
-
-	flex: 1;
-`;
+import { Loader } from '@components/index';
 
 const App: React.FC = () => {
 	const [fontsLoaded] = useFonts({
@@ -28,23 +22,19 @@ const App: React.FC = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<SafeAreaView>
-				<StatusBar
-					barStyle='light-content'
-					backgroundColor='transparent'
-					translucent
-				/>
+			<StatusBar
+				barStyle='light-content'
+				backgroundColor='transparent'
+				translucent
+			/>
 
-				<Loader
-					loading={!fontsLoaded}
-					accessibilityLabel='Animação de carregamento do projeto.'
-					aria-hidden={fontsLoaded}
-				>
-					<Header showBackArrow />
-
-					<Players />
-				</Loader>
-			</SafeAreaView>
+			<Loader
+				loading={!fontsLoaded}
+				accessibilityLabel='Animação de carregamento do projeto.'
+				aria-hidden={fontsLoaded}
+			>
+				<Routes />
+			</Loader>
 		</ThemeProvider>
 	);
 };
