@@ -13,4 +13,14 @@ declare global {
 
 	export interface IComponentWithChildren<T = {}>
 		extends React.FC<IDefaultPropsWithChildren & T> {}
+
+	namespace ReactNavigation {
+		interface RootParamList {
+			groups: undefined;
+			newGroup: undefined;
+			players: {
+				group: string;
+			};
+		}
+	}
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import LogoFile from '@images/logo.png';
 
@@ -10,8 +10,11 @@ interface IHeaderProps {}
 
 const Header: IComponent<IHeaderProps> = ({ ...props }) => {
 	const { name } = useRoute();
+	const { navigate } = useNavigation();
 
 	const showBackArrow = name !== 'groups';
+
+	const handleGoBack = () => navigate('groups');
 
 	return (
 		<Styles.Container showBackArrow={showBackArrow} {...props}>
@@ -22,6 +25,7 @@ const Header: IComponent<IHeaderProps> = ({ ...props }) => {
 					accessibilityRole='button'
 					accessibilityHint='Irá voltar para tela anterior.'
 					accessibilityLabel='Botão de voltar a tela.'
+					onPress={handleGoBack}
 				>
 					<Styles.BackArrow />
 				</Styles.BackArrowButton>

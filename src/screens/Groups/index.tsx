@@ -1,17 +1,23 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
 	Highlight,
 	GroupCard,
 	ListEmpty,
 	MainContainer,
+	Button,
 } from '@components/index';
 
 import * as Styles from './styles';
 
 const Groups: React.FC = () => {
 	const [groups, setGroups] = React.useState<string[]>([]);
+
+	const { navigate } = useNavigation();
+
+	const handleNewGroup = () => navigate('newGroup');
 
 	return (
 		<MainContainer>
@@ -28,6 +34,8 @@ const Groups: React.FC = () => {
 						<ListEmpty message='Que tal cadastrar a primeira turma?' />
 					)}
 				/>
+
+				<Button title='Criar nova turma' onPress={handleNewGroup} />
 			</Styles.Container>
 		</MainContainer>
 	);

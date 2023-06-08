@@ -1,10 +1,16 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { Button, Highlight, MainContainer, TextInput } from '@components/index';
 
 import * as Styles from './styles';
 
 const NewGroup: React.FC = () => {
+	const { navigate } = useNavigation();
+
+	const handleNew = () => navigate('players', { group: 'Rocket' });
+
 	return (
 		<MainContainer>
 			<Styles.Container>
@@ -17,7 +23,7 @@ const NewGroup: React.FC = () => {
 
 				<TextInput placeholder='Nome da turma' />
 
-				<Button title='Criar' style={{ marginTop: 20 }} />
+				<Button title='Criar' style={{ marginTop: 20 }} onPress={handleNew} />
 			</Styles.Container>
 		</MainContainer>
 	);
