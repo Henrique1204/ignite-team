@@ -1,14 +1,23 @@
 import React from 'react';
+import styled from 'styled-components/native';
 
 import { NavigationContainer } from '@react-navigation/native';
 
 import AppRoutes from './app.routes';
 
+const Container = styled.View`
+	background-color: ${({ theme }) => theme.colors.gray_600};
+
+	flex: 1;
+`;
+
 const Routes: React.FC = () => {
 	return (
-		<NavigationContainer>
-			<AppRoutes />
-		</NavigationContainer>
+		<Container>
+			<NavigationContainer>
+				<AppRoutes />
+			</NavigationContainer>
+		</Container>
 	);
 };
 
