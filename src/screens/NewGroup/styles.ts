@@ -2,9 +2,10 @@ import styled from 'styled-components/native';
 
 import { UsersThree } from 'phosphor-react-native';
 
-export const Container = styled.View`
+import MainContainer from '@components/MainContainer';
+
+export const Container = styled(MainContainer)`
 	width: 100%;
-	padding: 24px;
 	margin-top: 16px;
 
 	flex: 1;

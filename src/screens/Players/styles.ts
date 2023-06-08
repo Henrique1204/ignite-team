@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components/native';
 
-export const Container = styled.View`
-	padding: 24px;
+import MainContainer from '@components/MainContainer';
+
+export const Container = styled(MainContainer)`
 	margin-top: 16px;
 
 	flex: 1;

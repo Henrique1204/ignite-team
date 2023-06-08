@@ -12,20 +12,18 @@ const NewGroup: React.FC = () => {
 	const handleNew = () => navigate('players', { group: 'Rocket' });
 
 	return (
-		<MainContainer>
-			<Styles.Container>
-				<Styles.Icon />
+		<Styles.Container>
+			<Styles.Icon />
 
-				<Highlight
-					title='Nova turma'
-					subtitle='crie a turma para adicionar as pessoas.'
-				/>
+			<Highlight
+				title='Nova turma'
+				subtitle='crie a turma para adicionar as pessoas.'
+			/>
 
-				<TextInput placeholder='Nome da turma' />
+			<TextInput placeholder='Nome da turma' />
 
-				<Button title='Criar' style={{ marginTop: 20 }} onPress={handleNew} />
-			</Styles.Container>
-		</MainContainer>
+			<Button title='Criar' style={{ marginTop: 20 }} onPress={handleNew} />
+		</Styles.Container>
 	);
 };
 

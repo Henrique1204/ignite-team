@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-	padding: 24px;
+import MainContainer from '@components/MainContainer';
 
-	flex: 1;
-`;
+export const Container = styled(MainContainer)``;
