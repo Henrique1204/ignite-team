@@ -2,7 +2,9 @@ import React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { Button, Highlight, MainContainer, TextInput } from '@components/index';
+import { groupAdd } from '@storage/group';
+
+import { Button, Highlight, TextInput } from '@components/index';
 
 import * as Styles from './styles';
 
@@ -11,7 +13,11 @@ const NewGroup: React.FC = () => {
 
 	const { navigate } = useNavigation();
 
-	const handleNew = () => navigate('players', { group });
+	const handleNew = async () => {
+		await groupAdd(group);
+
+		navigate('players', { group });
+	};
 
 	return (
 		<Styles.Container>

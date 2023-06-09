@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import isEmptyString from '@core/helpers/isEmptyString';
+import { isEmptyString, isEqualText } from '@helpers/index';
 
 import { GROUP_COLLECTION } from '../storeageConfig';
 
