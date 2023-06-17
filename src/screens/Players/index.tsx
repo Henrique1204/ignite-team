@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, FlatList } from 'react-native';
+import { Alert, FlatList, Keyboard } from 'react-native';
 import { TextInput as ITextInput } from 'react-native/types';
 import { useRoute } from '@react-navigation/native';
 
@@ -55,7 +55,9 @@ const Players: React.FC = () => {
 			await fetchPlayers();
 
 			setName('');
-			inputRef.current?.focus();
+
+			inputRef.current?.blur();
+			Keyboard.dismiss();
 		} catch (error) {
 			if (error instanceof AppError) {
 				return Alert.alert('Novo Jogador', error.message);
@@ -89,6 +91,8 @@ const Players: React.FC = () => {
 					value={name}
 					defaultValue=''
 					onChangeText={setName}
+					onSubmitEditing={handleOnAdd}
+					returnKeyType='done'
 				/>
 
 				<ButtonIcon
