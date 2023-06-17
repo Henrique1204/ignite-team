@@ -20,7 +20,9 @@ export const groupsSelectAll = async (): Promise<string[]> => {
 
 export const groupAdd = async (newGroup: string): Promise<void> => {
 	try {
-		if (isEmptyString(newGroup)) return;
+		if (isEmptyString(newGroup)) {
+			throw new AppError('O nome do grupo deve ser preenchido.');
+		}
 
 		const groups = await groupsSelectAll();
 
