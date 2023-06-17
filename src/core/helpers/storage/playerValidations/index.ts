@@ -25,10 +25,10 @@ export const validatePlayerAlreadyExist = (
 ): void => {
 	const playerAlreadyExist = players.some(
 		({ name, time }) =>
-			isEqualText(name, playerData.name) || isEqualText(time, playerData.time)
+			isEqualText(name, playerData.name) && isEqualText(time, playerData.time)
 	);
 
 	if (playerAlreadyExist) {
-		throw new AppError('Já existe um grupo com esse nome.');
+		throw new AppError('Já existe um jogador com esse nome nesse time.');
 	}
 };

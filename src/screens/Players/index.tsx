@@ -1,10 +1,16 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+
+import { Alert, FlatList } from 'react-native';
+import { TextInput as ITextInput } from 'react-native/types';
+import { useRoute } from '@react-navigation/native';
 
 import { PlayerStorage } from '@types_/core/storage/player';
 
-import { playersSelectAllByGroup } from '@storage/player';
+import { isEmptyString } from '@helpers/index';
+
+import { playersSelectAllByGroup, playerAddByGroup } from '@storage/player';
+
+import AppError from '@utils/AppError';
 
 import {
 	Button,
@@ -19,15 +25,14 @@ import {
 import * as Styles from './styles';
 
 const Players: React.FC = () => {
-	const [team, setTeam] = React.useState<string>('Time a');
 	const [players, setPlayers] = React.useState<PlayerStorage[]>([]);
+	const [team, setTeam] = React.useState<string>('Time a');
+	const [name, setName] = React.useState<string>('');
+
+	const inputRef = React.useRef<ITextInput>(null);
 
 	const route = useRoute();
 	const { group } = route.params as IPlayersRouteParams;
-
-	const handleOnRemove = (player: string) => {
-		setPlayers((prev) => prev.filter(({ name }) => name !== player));
-	};
 
 	const fetchPlayers = async () => {
 		try {
@@ -41,11 +46,33 @@ const Players: React.FC = () => {
 		}
 	};
 
-	useFocusEffect(
-		React.useCallback(() => {
-			fetchPlayers();
-		}, [])
-	);
+	const handleOnAdd = async () => {
+		try {
+			const newPlayer = { name, time: team };
+
+			await playerAddByGroup(newPlayer, group);
+
+			await fetchPlayers();
+
+			setName('');
+			inputRef.current?.focus();
+		} catch (error) {
+			if (error instanceof AppError) {
+				return Alert.alert('Novo Jogador', error.message);
+			}
+
+			Alert.alert('Novo Jogador', 'Não foi possível adicionar novo jogador.');
+			console.error(error);
+		}
+	};
+
+	const handleOnRemove = (player: string) => {
+		setPlayers((prev) => prev.filter(({ name }) => name !== player));
+	};
+
+	React.useEffect(() => {
+		fetchPlayers();
+	}, [team]);
 
 	return (
 		<Styles.Container>
@@ -55,9 +82,20 @@ const Players: React.FC = () => {
 			/>
 
 			<Styles.Form>
-				<TextInput placeholder='Nome da pessoa' autoCorrect={false} />
+				<TextInput
+					ref={inputRef}
+					placeholder='Nome do jogador'
+					autoCorrect={false}
+					value={name}
+					defaultValue=''
+					onChangeText={setName}
+				/>
 
-				<ButtonIcon icon='add' />
+				<ButtonIcon
+					icon='add'
+					onPress={() => handleOnAdd()}
+					disabled={isEmptyString(name)}
+				/>
 			</Styles.Form>
 
 			<Styles.HeaderList>

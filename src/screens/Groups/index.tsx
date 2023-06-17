@@ -13,10 +13,6 @@ const Groups: React.FC = () => {
 
 	const { navigate } = useNavigation();
 
-	const handleNewGroup = () => navigate('newGroup');
-
-	const handleSelectCard = (group: string) => navigate('players', { group });
-
 	const fetchGroups = async () => {
 		try {
 			const groups = await groupsSelectAll();
@@ -26,6 +22,10 @@ const Groups: React.FC = () => {
 			console.error(error);
 		}
 	};
+
+	const handleNewGroup = () => navigate('newGroup');
+
+	const handleSelectCard = (group: string) => navigate('players', { group });
 
 	useFocusEffect(
 		React.useCallback(() => {

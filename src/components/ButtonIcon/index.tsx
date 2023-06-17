@@ -17,6 +17,12 @@ const ButtonIcon: IComponent<IButtonProps> = ({
 	icon,
 	...props
 }) => {
+	const getCustomColor = (): string => {
+		if (props?.disabled) return 'gray_300';
+
+		return type === 'primary' ? 'green_700' : 'red_dark';
+	};
+
 	return (
 		<Styles.Container
 			accessible
@@ -27,10 +33,7 @@ const ButtonIcon: IComponent<IButtonProps> = ({
 			}}
 			{...props}
 		>
-			<Styles.Icon
-				name={icon}
-				customColor={type === 'primary' ? 'green_700' : 'red_dark'}
-			/>
+			<Styles.Icon name={icon} customColor={getCustomColor()} />
 		</Styles.Container>
 	);
 };
