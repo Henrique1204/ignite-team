@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { PlayerStorage } from '@types_/core/storage/player';
+import { IPlayerStorage } from '@types_/core/storage/player';
 
 import * as Validations from '@helpers/storage/playerValidations';
 
@@ -8,7 +8,7 @@ import { PLAYER_COLLECTION } from '../storeageConfig';
 
 export const playersSelectAllByGroup = async (
 	group: string
-): Promise<PlayerStorage[]> => {
+): Promise<IPlayerStorage[]> => {
 	try {
 		const storageKey = `${PLAYER_COLLECTION}-${group}`;
 
@@ -23,7 +23,7 @@ export const playersSelectAllByGroup = async (
 };
 
 export const playerAddByGroup = async (
-	newPlayer: PlayerStorage,
+	newPlayer: IPlayerStorage,
 	group: string
 ): Promise<void> => {
 	try {
@@ -43,7 +43,7 @@ export const playerAddByGroup = async (
 };
 
 export const playerRemove = async (
-	player: PlayerStorage,
+	player: IPlayerStorage,
 	group: string
 ): Promise<void> => {
 	try {

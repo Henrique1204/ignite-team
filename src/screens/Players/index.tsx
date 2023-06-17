@@ -1,42 +1,24 @@
 import React from 'react';
 
 import { Alert, FlatList } from 'react-native';
-import { TextInput as ITextInput } from 'react-native/types';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { PlayerStorage } from '@types_/core/storage/player';
+import { IPlayerStorage } from '@types_/core/storage/player';
 
-import { isEmptyString } from '@helpers/index';
+import { groupRemove } from '@storage/group';
+import { playersSelectAllByGroup } from '@storage/player';
 
-import {
-	playersSelectAllByGroup,
-	playerAddByGroup,
-	playerRemove,
-} from '@storage/player';
-
-import AppError from '@utils/AppError';
-
-import {
-	Button,
-	ButtonIcon,
-	Filter,
-	Highlight,
-	ListEmpty,
-	Loader,
-	PlayerCard,
-	TextInput,
-} from '@components/index';
+import { Button, Filter, Highlight } from '@components/index';
 
 import * as Styles from './styles';
-import { groupRemove } from '@storage/group';
+
+import Form from './components/Form';
+import PlayersList from './components/PlayersList';
 
 const Players: React.FC = () => {
 	const [loading, setLoading] = React.useState<boolean>(true);
-	const [players, setPlayers] = React.useState<PlayerStorage[]>([]);
+	const [players, setPlayers] = React.useState<IPlayerStorage[]>([]);
 	const [team, setTeam] = React.useState<string>('Time a');
-	const [name, setName] = React.useState<string>('');
-
-	const inputRef = React.useRef<ITextInput>(null);
 
 	const route = useRoute();
 	const { group } = route.params as IPlayersRouteParams;
@@ -57,53 +39,6 @@ const Players: React.FC = () => {
 		} finally {
 			setLoading(false);
 		}
-	};
-
-	const handleOnAdd = async () => {
-		try {
-			const newPlayer = { name, team };
-
-			await playerAddByGroup(newPlayer, group);
-
-			await fetchPlayers();
-
-			setName('');
-
-			// Não funciona com a limpeza de texto.
-			// inputRef.current?.blur();
-			// Keyboard.dismiss();
-		} catch (error) {
-			if (error instanceof AppError) {
-				return Alert.alert('Novo Jogador', error.message);
-			}
-
-			Alert.alert('Novo Jogador', 'Não foi possível adicionar novo jogador.');
-			console.error(error);
-		}
-	};
-
-	const handleOnRemovePlayer = (playerName: string) => {
-		const _onRemove = async () => {
-			try {
-				const player = { name: playerName, team };
-
-				await playerRemove(player, group);
-				await fetchPlayers();
-			} catch (error) {
-				if (error instanceof AppError) {
-					return Alert.alert('Novo Jogador', error.message);
-				}
-
-				Alert.alert('Novo Jogador', 'Não foi possível remover jogador.');
-				console.error(error);
-			}
-		};
-
-		Alert.alert(
-			'Remover Jogador',
-			`Certeza que deseja remover o jogador ${playerName}?`,
-			[{ text: 'Não' }, { text: 'Sim', onPress: _onRemove }]
-		);
 	};
 
 	const handleOnRemoveGroup = () => {
@@ -135,24 +70,7 @@ const Players: React.FC = () => {
 				subtitle='adicione a galera e separe os times.'
 			/>
 
-			<Styles.Form>
-				<TextInput
-					ref={inputRef}
-					placeholder='Nome do jogador'
-					autoCorrect={false}
-					value={name}
-					defaultValue=''
-					onChangeText={setName}
-					onSubmitEditing={handleOnAdd}
-					returnKeyType='done'
-				/>
-
-				<ButtonIcon
-					icon='add'
-					onPress={() => handleOnAdd()}
-					disabled={isEmptyString(name)}
-				/>
-			</Styles.Form>
+			<Form team={team} onRefresh={fetchPlayers} />
 
 			<Styles.HeaderList>
 				<FlatList
@@ -171,22 +89,11 @@ const Players: React.FC = () => {
 				<Styles.NumberOfPlayers>{players.length}</Styles.NumberOfPlayers>
 			</Styles.HeaderList>
 
-			<FlatList
-				data={players}
-				showsVerticalScrollIndicator={false}
-				contentContainerStyle={[
-					{ paddingBottom: 100 },
-					players.length === 0 && { flex: 1 },
-				]}
-				keyExtractor={({ name, team }) => `${name}-${team}`}
-				renderItem={({ item }) => (
-					<Loader loading={loading}>
-						<PlayerCard name={item.name} onRemove={handleOnRemovePlayer} />
-					</Loader>
-				)}
-				ListEmptyComponent={() => (
-					<ListEmpty message='Não há pessoas nesse time.' />
-				)}
+			<PlayersList
+				loading={loading}
+				players={players}
+				team={team}
+				onRefresh={fetchPlayers}
 			/>
 
 			<Button

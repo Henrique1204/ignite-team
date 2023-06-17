@@ -1,4 +1,4 @@
-export interface PlayerStorage {
+export interface IPlayerStorage {
 	name: string;
 	team: string;
 }
