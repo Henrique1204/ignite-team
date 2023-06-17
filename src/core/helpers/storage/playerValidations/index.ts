@@ -7,7 +7,7 @@ import { isEmptyString, isEqualText } from '../../index';
 export const validatePlayerEmptyData = (playerData: PlayerStorage): void => {
 	const validations: Record<keyof PlayerStorage, string> = {
 		name: 'O nome do jogador deve ser preenchido.',
-		time: 'O nome do time deve ser preenchido.',
+		team: 'O nome do time deve ser preenchido.',
 	};
 
 	const validationsArray = Object.entries(validations);
@@ -24,8 +24,8 @@ export const validatePlayerAlreadyExist = (
 	playerData: PlayerStorage
 ): void => {
 	const playerAlreadyExist = players.some(
-		({ name, time }) =>
-			isEqualText(name, playerData.name) && isEqualText(time, playerData.time)
+		({ name, team }) =>
+			isEqualText(name, playerData.name) && isEqualText(team, playerData.team)
 	);
 
 	if (playerAlreadyExist) {

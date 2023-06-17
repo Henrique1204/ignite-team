@@ -38,7 +38,7 @@ const Players: React.FC = () => {
 		try {
 			const players = await playersSelectAllByGroup(group);
 
-			const playersByTeam = players.filter(({ time }) => time === team);
+			const playersByTeam = players.filter((player) => player.team === team);
 
 			setPlayers(playersByTeam);
 		} catch (error) {
@@ -48,7 +48,7 @@ const Players: React.FC = () => {
 
 	const handleOnAdd = async () => {
 		try {
-			const newPlayer = { name, time: team };
+			const newPlayer = { name, team };
 
 			await playerAddByGroup(newPlayer, group);
 
@@ -122,7 +122,7 @@ const Players: React.FC = () => {
 					{ paddingBottom: 100 },
 					players.length === 0 && { flex: 1 },
 				]}
-				keyExtractor={({ name, time }) => `${name}-${time}`}
+				keyExtractor={({ name, team }) => `${name}-${team}`}
 				renderItem={({ item }) => (
 					<PlayerCard name={item.name} onRemove={handleOnRemove} />
 				)}
