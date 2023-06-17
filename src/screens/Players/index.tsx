@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, FlatList, Keyboard } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { TextInput as ITextInput } from 'react-native/types';
 import { useRoute } from '@react-navigation/native';
 
@@ -8,7 +8,11 @@ import { PlayerStorage } from '@types_/core/storage/player';
 
 import { isEmptyString } from '@helpers/index';
 
-import { playersSelectAllByGroup, playerAddByGroup } from '@storage/player';
+import {
+	playersSelectAllByGroup,
+	playerAddByGroup,
+	playerRemove,
+} from '@storage/player';
 
 import AppError from '@utils/AppError';
 
@@ -56,8 +60,9 @@ const Players: React.FC = () => {
 
 			setName('');
 
-			inputRef.current?.blur();
-			Keyboard.dismiss();
+			// Não funciona com a limpeza de texto.
+			// inputRef.current?.blur();
+			// Keyboard.dismiss();
 		} catch (error) {
 			if (error instanceof AppError) {
 				return Alert.alert('Novo Jogador', error.message);
@@ -68,8 +73,20 @@ const Players: React.FC = () => {
 		}
 	};
 
-	const handleOnRemove = (player: string) => {
-		setPlayers((prev) => prev.filter(({ name }) => name !== player));
+	const handleOnRemove = async (playerName: string) => {
+		try {
+			const player = { name: playerName, team };
+
+			await playerRemove(player, group);
+			await fetchPlayers();
+		} catch (error) {
+			if (error instanceof AppError) {
+				return Alert.alert('Novo Jogador', error.message);
+			}
+
+			Alert.alert('Novo Jogador', 'Não foi possível remover jogador.');
+			console.error(error);
+		}
 	};
 
 	React.useEffect(() => {

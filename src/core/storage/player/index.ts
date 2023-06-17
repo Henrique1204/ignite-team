@@ -41,3 +41,25 @@ export const playerAddByGroup = async (
 		throw error;
 	}
 };
+
+export const playerRemove = async (
+	player: PlayerStorage,
+	group: string
+): Promise<void> => {
+	try {
+		Validations.validatePlayerEmptyData(player);
+
+		const players = await playersSelectAllByGroup(group);
+
+		const playersFiltered = players.filter(
+			({ name, team }) => name != player.name || team !== player.team
+		);
+
+		const storageKey = `${PLAYER_COLLECTION}-${group}`;
+		const storageData = JSON.stringify(playersFiltered);
+
+		await AsyncStorage.setItem(storageKey, storageData);
+	} catch (error) {
+		throw error;
+	}
+};
