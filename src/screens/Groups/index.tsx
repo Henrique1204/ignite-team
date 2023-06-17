@@ -2,10 +2,11 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
+import { groupsSelectAll } from '@storage/group';
+
 import { Highlight, GroupCard, ListEmpty, Button } from '@components/index';
 
 import * as Styles from './styles';
-import { groupsSelectAll } from '@storage/group';
 
 const Groups: React.FC = () => {
 	const [groups, setGroups] = React.useState<string[]>([]);
@@ -17,9 +18,13 @@ const Groups: React.FC = () => {
 	const handleSelectCard = (group: string) => navigate('players', { group });
 
 	const fetchGroups = async () => {
-		const groups = await groupsSelectAll();
+		try {
+			const groups = await groupsSelectAll();
 
-		setGroups(groups);
+			setGroups(groups);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	useFocusEffect(

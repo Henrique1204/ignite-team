@@ -1,4 +1,4 @@
-import { colors, fontFamily, fontSize, theme } from '@core/assets/theme';
+import { colors, fontFamily, fontSize, theme } from '@assets/theme';
 
 export type IColors = typeof colors;
 export type IColorsEnum = keyof IColors;

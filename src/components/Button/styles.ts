@@ -17,8 +17,10 @@ export const Container = styled(TouchableOpacity)<IContainerProps>`
 	align-items: center;
 	justify-content: center;
 
-	${({ theme, background }) => css`
-		background-color: ${theme.colors[background]};
+	${({ theme, background, disabled }) => css`
+		background-color: ${disabled
+			? theme.colors.gray_300
+			: theme.colors[background]};
 	`}
 `;
 

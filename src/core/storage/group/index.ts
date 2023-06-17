@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { isEmptyString, isEqualText } from '@helpers/index';
 
+import AppError from '@utils/AppError';
+
 import { GROUP_COLLECTION } from '../storeageConfig';
 
 export const groupsSelectAll = async (): Promise<string[]> => {
@@ -22,7 +24,9 @@ export const groupAdd = async (newGroup: string): Promise<void> => {
 
 		const groups = await groupsSelectAll();
 
-		if (groups.some((group) => isEqualText(group, newGroup))) return;
+		if (groups.some((group) => isEqualText(group, newGroup))) {
+			throw new AppError('Já existe um grupo com esse nome.');
+		}
 
 		const newGroupsString = JSON.stringify([...groups, newGroup.trim()]);
 

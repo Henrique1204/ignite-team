@@ -1,8 +1,13 @@
 import React from 'react';
+import { Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { isEmptyString } from '@helpers/index';
+
 import { groupAdd } from '@storage/group';
+
+import AppError from '@utils/AppError';
 
 import { Button, Highlight, TextInput } from '@components/index';
 
@@ -14,9 +19,18 @@ const NewGroup: React.FC = () => {
 	const { navigate } = useNavigation();
 
 	const handleNew = async () => {
-		await groupAdd(group);
+		try {
+			await groupAdd(group);
 
-		navigate('players', { group });
+			navigate('players', { group });
+		} catch (error) {
+			if (error instanceof AppError) {
+				return Alert.alert('Novo Grupo', error.message);
+			}
+
+			Alert.alert('Novo Grupo', 'Não foi possível criar um novo grupo.');
+			console.error(error);
+		}
 	};
 
 	return (
@@ -35,7 +49,12 @@ const NewGroup: React.FC = () => {
 				onChangeText={setGroup}
 			/>
 
-			<Button title='Criar' style={{ marginTop: 20 }} onPress={handleNew} />
+			<Button
+				title='Criar'
+				style={{ marginTop: 20 }}
+				onPress={handleNew}
+				disabled={isEmptyString(group)}
+			/>
 		</Styles.Container>
 	);
 };

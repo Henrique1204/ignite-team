@@ -8,7 +8,9 @@ import {
 	Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 
-import { theme } from '@core/assets/theme';
+import { ITheme } from '@types_/core/assets/theme';
+
+import { theme } from '@assets/theme/index';
 
 import Routes from './src/routes';
 
