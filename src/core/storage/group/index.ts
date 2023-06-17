@@ -4,7 +4,7 @@ import { isEmptyString, isEqualText } from '@helpers/index';
 
 import AppError from '@utils/AppError';
 
-import { GROUP_COLLECTION } from '../storeageConfig';
+import { GROUP_COLLECTION, PLAYER_COLLECTION } from '../storeageConfig';
 
 export const groupsSelectAll = async (): Promise<string[]> => {
 	try {
@@ -33,6 +33,24 @@ export const groupAdd = async (newGroup: string): Promise<void> => {
 		const newGroupsString = JSON.stringify([...groups, newGroup.trim()]);
 
 		await AsyncStorage.setItem(GROUP_COLLECTION, newGroupsString);
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const groupRemove = async (group: string): Promise<void> => {
+	try {
+		const groups = await groupsSelectAll();
+
+		const groupsFiltered = groups.filter((prevGroup) => prevGroup !== group);
+
+		const storageData = JSON.stringify(groupsFiltered);
+
+		await AsyncStorage.setItem(GROUP_COLLECTION, storageData);
+
+		const playerStorageKey = `${PLAYER_COLLECTION}-${group}`;
+
+		await AsyncStorage.removeItem(playerStorageKey);
 	} catch (error) {
 		throw error;
 	}

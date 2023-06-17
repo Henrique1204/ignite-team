@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Alert, FlatList } from 'react-native';
 import { TextInput as ITextInput } from 'react-native/types';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { PlayerStorage } from '@types_/core/storage/player';
 
@@ -22,13 +22,16 @@ import {
 	Filter,
 	Highlight,
 	ListEmpty,
+	Loader,
 	PlayerCard,
 	TextInput,
 } from '@components/index';
 
 import * as Styles from './styles';
+import { groupRemove } from '@storage/group';
 
 const Players: React.FC = () => {
+	const [loading, setLoading] = React.useState<boolean>(true);
 	const [players, setPlayers] = React.useState<PlayerStorage[]>([]);
 	const [team, setTeam] = React.useState<string>('Time a');
 	const [name, setName] = React.useState<string>('');
@@ -38,8 +41,12 @@ const Players: React.FC = () => {
 	const route = useRoute();
 	const { group } = route.params as IPlayersRouteParams;
 
+	const { navigate } = useNavigation();
+
 	const fetchPlayers = async () => {
 		try {
+			setLoading(true);
+
 			const players = await playersSelectAllByGroup(group);
 
 			const playersByTeam = players.filter((player) => player.team === team);
@@ -47,6 +54,8 @@ const Players: React.FC = () => {
 			setPlayers(playersByTeam);
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -73,20 +82,46 @@ const Players: React.FC = () => {
 		}
 	};
 
-	const handleOnRemove = async (playerName: string) => {
-		try {
-			const player = { name: playerName, team };
+	const handleOnRemovePlayer = (playerName: string) => {
+		const _onRemove = async () => {
+			try {
+				const player = { name: playerName, team };
 
-			await playerRemove(player, group);
-			await fetchPlayers();
-		} catch (error) {
-			if (error instanceof AppError) {
-				return Alert.alert('Novo Jogador', error.message);
+				await playerRemove(player, group);
+				await fetchPlayers();
+			} catch (error) {
+				if (error instanceof AppError) {
+					return Alert.alert('Novo Jogador', error.message);
+				}
+
+				Alert.alert('Novo Jogador', 'Não foi possível remover jogador.');
+				console.error(error);
 			}
+		};
 
-			Alert.alert('Novo Jogador', 'Não foi possível remover jogador.');
-			console.error(error);
-		}
+		Alert.alert(
+			'Remover Jogador',
+			`Certeza que deseja remover o jogador ${playerName}?`,
+			[{ text: 'Não' }, { text: 'Sim', onPress: _onRemove }]
+		);
+	};
+
+	const handleOnRemoveGroup = () => {
+		const _onRemove = async () => {
+			try {
+				await groupRemove(group);
+
+				navigate('groups');
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		Alert.alert(
+			'Remover Grupo',
+			`Certeza que deseja remover o grupo ${group}?`,
+			[{ text: 'Não' }, { text: 'Sim', onPress: _onRemove }]
+		);
 	};
 
 	React.useEffect(() => {
@@ -145,14 +180,20 @@ const Players: React.FC = () => {
 				]}
 				keyExtractor={({ name, team }) => `${name}-${team}`}
 				renderItem={({ item }) => (
-					<PlayerCard name={item.name} onRemove={handleOnRemove} />
+					<Loader loading={loading}>
+						<PlayerCard name={item.name} onRemove={handleOnRemovePlayer} />
+					</Loader>
 				)}
 				ListEmptyComponent={() => (
 					<ListEmpty message='Não há pessoas nesse time.' />
 				)}
 			/>
 
-			<Button title='Remover Turma' type='secondary' />
+			<Button
+				title='Remover Turma'
+				type='secondary'
+				onPress={() => handleOnRemoveGroup()}
+			/>
 		</Styles.Container>
 	);
 };

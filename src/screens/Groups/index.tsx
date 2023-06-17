@@ -4,22 +4,33 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { groupsSelectAll } from '@storage/group';
 
-import { Highlight, GroupCard, ListEmpty, Button } from '@components/index';
+import {
+	Highlight,
+	GroupCard,
+	ListEmpty,
+	Button,
+	Loader,
+} from '@components/index';
 
 import * as Styles from './styles';
 
 const Groups: React.FC = () => {
+	const [loading, setLoading] = React.useState<boolean>(true);
 	const [groups, setGroups] = React.useState<string[]>([]);
 
 	const { navigate } = useNavigation();
 
 	const fetchGroups = async () => {
 		try {
+			setLoading(true);
+
 			const groups = await groupsSelectAll();
 
 			setGroups(groups);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -43,7 +54,9 @@ const Groups: React.FC = () => {
 				contentContainerStyle={!groups.length && { flex: 1 }}
 				keyExtractor={(key) => key}
 				renderItem={({ item }) => (
-					<GroupCard title={item} onPress={handleSelectCard} />
+					<Loader loading={loading}>
+						<GroupCard title={item} onPress={handleSelectCard} />
+					</Loader>
 				)}
 				ListEmptyComponent={() => (
 					<ListEmpty message='Que tal cadastrar a primeira turma?' />
